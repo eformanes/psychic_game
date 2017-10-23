@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Psychic Game</title>
+</head>
+<body>
+	
+	<h1>The Psychic Game</h1>
+	<p>
+		Guess what letter I'm thinking of
+	</p>
+	<div id = "game">
+		
+	</div>
+
+
+
+	<script type="text/javascript">
+		//Functions on top??
+		//get a random secret letter
+		function getNewSecretLetter(){
+			secretLetter = validLetter[Math.floor(Math.random() * validLetter.length)];
+		}
+
+
+
+
+		//initialize game state
+		var wins = 0;
+		var losses = 0;
+		var pastGuesses = [];
+		var validLetter = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+		var secretLetter = validLetter[Math.floor(Math.random() * validLetter.length)];
+		//var secretLetter = 'z';
+		var numberOfRemainingGuesses = 9;
+
+		// Reset game by getting new letter, set guessback to 9,  blank out pastGuesses array
+		function resetGame(){
+			getNewSecretLetter();
+			numberOfRemainingGuesses = 9;
+			pastGuesses = [];
+
+			console.log("I am reseting");
+			
+			console.log("pastGuesses " + pastGuesses + "SecreLetter " + secretLetter);
+		}
+
+		
+			document.onkeyup = function(event){
+				if(numberOfRemainingGuesses > 0){
+
+
+					if(secretLetter === event.key){
+						console.log("GOT THE KEY");
+						wins++;
+						console.log("NUMBER OF WINS " + wins);
+						resetGame();
+					}
+					else{
+						console.log("NOT THE KEY");
+						numberOfRemainingGuesses--;
+						pastGuesses.push(event.key);
+						console.log("NUMBER OF REMAINING GUESSES IS " + numberOfRemainingGuesses);
+						console.log("PAST GUESSES " + pastGuesses);
+					}
+				}
+				else{
+					losses++;
+					console.log("NUMBER OF WINS " + wins);
+					console.log("NUMBER OF LOSSES " + losses);
+					resetGame();
+				}
+
+				var html = "<p>Wins: " + wins + "</p>" + 
+							"<p>Losses: " + losses + "</p>" +
+							"<p>Guesses Left: " + numberOfRemainingGuesses + "</p>" +
+							"<p>Your Guesses so far: " + pastGuesses + "</p>"; 
+				document.querySelector("#game").innerHTML = html;
+			}
+
+					
+
+	</script>
+
+</body>
+</html>
